@@ -1,0 +1,187 @@
+[
+  {
+    "id": "tab_robot_ui_1",
+    "type": "tab",
+    "label": "Robot Control UI",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "broker_robot_ui_1",
+    "type": "mqtt-broker",
+    "name": "Local MQTT Broker",
+    "broker": "192.168.4.1",
+    "port": "1883",
+    "clientid": "",
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": ""
+  },
+  {
+    "id": "inject_ur_wave_ui",
+    "type": "inject",
+    "z": "tab_robot_ui_1",
+    "name": "UR Wave",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "wave",
+    "payloadType": "str",
+    "x": 120,
+    "y": 80,
+    "wires": [
+      [
+        "mqtt_out_ur_ui"
+      ]
+    ]
+  },
+  {
+    "id": "inject_abb_wave_ui",
+    "type": "inject",
+    "z": "tab_robot_ui_1",
+    "name": "ABB Wave",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "wave",
+    "payloadType": "str",
+    "x": 125,
+    "y": 140,
+    "wires": [
+      [
+        "mqtt_out_abb_ui"
+      ]
+    ]
+  },
+  {
+    "id": "inject_stop_all_ui",
+    "type": "inject",
+    "z": "tab_robot_ui_1",
+    "name": "Stop All",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "stop",
+    "payloadType": "str",
+    "x": 120,
+    "y": 200,
+    "wires": [
+      [
+        "mqtt_out_ur_ui",
+        "mqtt_out_abb_ui"
+      ]
+    ]
+  },
+  {
+    "id": "mqtt_out_ur_ui",
+    "type": "mqtt out",
+    "z": "tab_robot_ui_1",
+    "name": "UR CMD",
+    "topic": "robot/ur/cmd",
+    "qos": "",
+    "retain": "",
+    "broker": "broker_robot_ui_1",
+    "x": 340,
+    "y": 90,
+    "wires": []
+  },
+  {
+    "id": "mqtt_out_abb_ui",
+    "type": "mqtt out",
+    "z": "tab_robot_ui_1",
+    "name": "ABB CMD",
+    "topic": "robot/abb/cmd",
+    "qos": "",
+    "retain": "",
+    "broker": "broker_robot_ui_1",
+    "x": 345,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "mqtt_in_ur_resp_ui",
+    "type": "mqtt in",
+    "z": "tab_robot_ui_1",
+    "name": "UR RESP",
+    "topic": "robot/ur/response",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "broker_robot_ui_1",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "x": 120,
+    "y": 300,
+    "wires": [
+      [
+        "debug_ur_ui"
+      ]
+    ]
+  },
+  {
+    "id": "mqtt_in_abb_resp_ui",
+    "type": "mqtt in",
+    "z": "tab_robot_ui_1",
+    "name": "ABB RESP",
+    "topic": "robot/abb/response",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "broker_robot_ui_1",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "x": 125,
+    "y": 360,
+    "wires": [
+      [
+        "debug_abb_ui"
+      ]
+    ]
+  },
+  {
+    "id": "debug_ur_ui",
+    "type": "debug",
+    "z": "tab_robot_ui_1",
+    "name": "UR Response",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 340,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "debug_abb_ui",
+    "type": "debug",
+    "z": "tab_robot_ui_1",
+    "name": "ABB Response",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 350,
+    "y": 360,
+    "wires": []
+  }
+]
